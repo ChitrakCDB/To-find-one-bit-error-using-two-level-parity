@@ -1,0 +1,197 @@
+#include<stdio.h>
+#include<string.h>
+#include <math.h>
+
+int main()
+{
+    char str[100];
+    int len,i=0,ascii[100],j=0,k,inv[100][100],rem[100][100],nrow=0,ncol=0,nbit1=0,nbit2=0,nrows=0,ncols=0,r_row=0,r_col=0,asc[100];
+    printf("Enter your String:");
+    scanf("%s", str);
+    len=strlen(str);
+
+    for(i=0;i<len;i++)
+   {   k=0,j=0,nrow=0;
+       ascii[i]=(int)str[i];
+
+        while(ascii[i]!=0)
+    {
+        inv[i][j]=ascii[i]%2;
+        ascii[i]=ascii[i]/2;//conversion of string to binary
+        j++;
+    }
+
+    for(k=0;k<j;k++)
+    {
+        rem[i][k]=inv[i][j-k-1];
+        printf("%d",rem[i][k]);
+        if(rem[i][k]==1)
+        {
+                nrow++;
+        }
+    }
+
+
+        if((nrow%2)==0)
+            {
+                rem[i][7]=0;
+        }
+        else
+        {
+                rem[i][7]=1;
+        }
+        printf("%d",rem[i][7]);
+     printf("\n");
+   }
+    for(k=0;k<7;k++)
+    {
+        ncol=0;
+        for(i=0;i<len;i++)
+        {
+            if(rem[i][k]==1){ncol++;}
+        }
+
+        if((ncol%2)==0)
+        {
+            rem[len][k]=0;
+        }
+        else
+            {
+                rem[len][k]=1;
+            }
+        printf("%d",rem[len][k]);
+    }
+
+    for(i=0;i<len;i++)
+        {
+            if(rem[i][7]==1)
+    {
+     nbit1++;
+    }
+    }
+    for(k=0;k<7;k++)
+    {
+        if(rem[len][k]==1)
+    {
+     nbit2++;//line 24 to 70 printing of parity matrix
+    }
+    }
+    if(((nbit1%2)==0) && ((nbit2%2)==0))//checking number of ones
+    {
+        rem[len][7]=0;
+    }
+    if(((nbit1%2)!=0) && ((nbit2%2)!=0))
+    {
+        rem[len][7]=1;
+    }
+    printf("%d",rem[len][7]);
+     int num1 = (rand()%(7-0+1));
+        printf("\nGenerating a Random Error in:\nrow number = %d ", num1);
+     int num2 = (rand()%(len-0+1));
+        printf("\ncolumn number= %d \n", num2);
+     if(rem[num1][num2]==1)
+        {
+            rem[num1][num2]=0;
+         }
+     else
+        {
+            rem[num1][num2]=1;
+        }
+
+    printf("\nShowing the Generated Error in matrix :\n");
+    for(i=0;i<=len;i++)
+    {
+        for(k=0;k<=7;k++)
+        {
+            printf("%d",rem[i][k]);
+        }
+        printf("\n");
+    }
+
+    printf("Adding parity row and parity column to catch the error.\n");
+    for(i=0;i<(len+1);i++)
+        {
+            nrows=0;
+            for(k=0;k<8;k++){if(rem[i][k]==1){nrows++;}}
+            if(nrows%2==0){rem[i][8]=0;}
+            else{rem[i][8]=1;}
+        }
+    printf("\n");
+    for(k=0;k<9;k++)
+        {
+            ncols=0;
+            for(i=0;i<=len;i++)
+                {
+                    if(rem[i][k]==1)
+                    {
+                        ncols++;
+            }
+            }
+            if(ncols%2==0)
+                {
+                    rem[(len+1)][k]=0;
+                }
+            else
+                {
+                    rem[(len+1)][k]=1;
+            }
+        }
+            for(i=0;i<(len+2);i++)
+            {
+                    for(k=0;k<=8;k++)
+                    {
+                        printf("%d",rem[i][k]);
+                    }
+            printf("\n");
+            }
+            printf("Correcting error displaying the correct code:\n");
+       for(k=0;k<9;k++)
+       {
+           if(rem[(len+1)][k]==0){
+                r_col++;
+           }
+           else
+            {
+                break;
+           }
+       }
+
+       for(i=0;i<(len+1);i++)
+       {
+           if(rem[i][8]==0){
+                r_row++;
+           }
+           else
+            {
+                break;
+           }
+       }
+        printf("\nError is in %d row.\n",r_row);
+        printf("and");
+        printf("\nError in %d col.\n",r_col);
+
+
+       if(rem[r_row][r_col]==0)
+       {
+            rem[r_row][r_col]=1;
+       }
+       else
+        {
+            rem[r_row][r_col]=0;
+        }
+
+       for(i=0;i<(len);i++)
+            {
+                    for(k=0;k<7;k++)
+                    {
+                        printf("%d",rem[i][k]);
+                        asc[i]=asc[i]+(rem[i][k]*pow(2,(6-k)));
+
+                    }
+            printf("\n");
+            }
+            printf("\n");
+            for(i=0;i<(len);i++){printf("%c",(char)asc[i]);}
+
+    return 0;
+}
