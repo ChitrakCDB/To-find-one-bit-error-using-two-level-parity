@@ -1,0 +1,9 @@
+# To-find-one-bit-error-using-two-level-parity
+first of all we have to take number from user then we have to convert it into an integer there is an inbuit function in C to change string into integer
+then we have to store the integer value in a variable after this we have to convert it into binary number as the parity matrix consists only 0 and 1 
+by using for loop we have to check the parity for eg. 101110 then the row is incremented and the ascii of other letter is displayed then we have to divide the number row and check remainder if it is 0 then its ok otherwise one more row is added and square matrix is formed
+same procedure we have to do with columns also then we have to add parity row and column so we have to check the number off one are even or odd so again we have to divide it with two and the decision is made according to the remainder
+and we have to display it i've used random function to generate error in the code so the row and column will be displayed where the bit is changed as i've given a different variable to store value of error I will display it to the user
+then again same procedure for adding rows and columns don't forget to increment number of bits in for loop otherwise the code might misbehave and the expected outcome will notcome thats what i had did in  developing the code a minor mistake but can ruin the code.
+after adding the parity row and column (before this we have to check the number of ones is odd or even and then we have to add parity row and column)
+then again we have to display the corrected code beeefore this we have to display the error parity matrix also after showing where is the error and at final stage the corrected parity matrix as it was shown at first time will be displayed and in last i've again converted the binary number to the decimal number and converted integer to string so the user can know the parity matrix is corrected and is for the string which they have entered.
